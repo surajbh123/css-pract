@@ -1,0 +1,67 @@
+// .sccs
+// .sass
+
+@import "./_resets.scss";
+@import "./_variables.scss";
+
+@function weight($weight-name) {
+  @return map-get($font-weights, $weight-name);
+}
+
+body {
+  background: $primary;
+  color: $text-color;
+}
+
+@mixin flex-center($direction) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin theme($light-theme: true) {
+  @if $light-theme {
+    background: lighten($primary, 100%);
+    color: darken($accent-color, 100%);
+  }
+}
+
+//
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}
+
+.main {
+  width: 80%;
+  margin: 0 auto;
+  @include flex-center(row);
+  width: calc(80%-60%);
+
+  //#{$} make nested selecter
+  //& reprent parent
+  #{&}__paregraph1 {
+    color: $accent-color;
+    font-weight: weight(bold);
+    &:hover {
+      color: pink;
+    }
+  }
+
+  #{&}__paregraph2 {
+    @extend .main__paregraph2;
+    &:hover {
+      color: rgb(167, 118, 118);
+    }
+  }
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.light {
+  @include theme(false);
+}
